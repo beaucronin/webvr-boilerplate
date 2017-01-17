@@ -136,7 +136,7 @@ WebVRManager.prototype.getDeviceByType_ = function(type) {
     navigator.getVRDisplays().then(function(displays) {
       // Promise succeeds, but check if there are any displays actually.
       for (var i = 0; i < displays.length; i++) {
-        if (displays[i] instanceof type) {
+        if (displays[i] instanceof type || this.isValidHmdDisplayName(displays[i].displayName) ) {
           resolve(displays[i]);
           break;
         }
@@ -148,6 +148,20 @@ WebVRManager.prototype.getDeviceByType_ = function(type) {
     });
   });
 };
+
+// A hack to overcome the weird fact that the instanceof check in getDeviceByType_
+// isn't returning true when it should
+WebVRManager.prototype.isValidHmdDisplayName(displayName) {
+  let dn = displayName.toLowerCase();
+  return dn.startsWith("htc") ||
+    dn.startsWith("oculus") ||
+    dn.startsWith("google") ||
+    dn.startsWith("openvr") ||
+    dn.startsWith("cardboard") ||
+    dn.startsWith("daydream") ||
+    dn.startsWith("rift") ||
+    dn.startsWith("vive");
+}
 
 /**
  * Helper for entering VR mode.
