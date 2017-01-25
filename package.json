@@ -35,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/borismus/webvr-boilerplate/issues"
   },
-  "homepage": "https://github.com/borismus/webvr-boilerplate#readme"
+  "homepage": "https://github.com/borismus/webvr-boilerplate#readme",
+  "browserify": {
+    "transform": [["babelify", { "presets": ["es2015"] }]]
+  }
 }
